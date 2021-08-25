@@ -5,8 +5,17 @@ Vagrant.configure("2") do |config|
     vb.cpus = 1
   end
 
+  config.vm.define "wordpress" do |wordpress|
+    wordpress.vm.network "public_network", ip: "10.193.40.98"
+    wordpress.vm.provision "shell",
+    inline: "cat /vagrant/configs/id_bionic_ho.pub >> .ssh/authorized_keys"
+    wordpress.vm.provider "virtualbox" do |vb|
+      vb.name = "server_wordpress"
+    end
+  end
+
   config.vm.define "ansible" do |ansible|
-    ansible.vm.network "public_network", ip: "10.193.40.98"
+    ansible.vm.network "public_network", ip: "10.193.40.99"
     ansible.vm.provision "shell",
     inline: "cp /vagrant/id_bionic_ho /home/vagrant && \
              chmod 600 /home/vagrant/id_bionic_ho && \
@@ -23,13 +32,4 @@ Vagrant.configure("2") do |config|
     inline: "ansible-playbook -i /vagrant/Hosts \
              /vagrant/configs/ansible/provisioning.yml"
     end
-
-  config.vm.define "wordpress" do |wordpress|
-    wordpress.vm.network "public_network", ip: "10.193.40.99"
-    wordpress.vm.provision "shell",
-    inline: "cat /vagrant/configs/id_bionic_ho.pub >> .ssh/authorized_keys"
-    wordpress.vm.provider "virtualbox" do |vb|
-      vb.name = "server_wordpress"
-    end
-  end
 end
