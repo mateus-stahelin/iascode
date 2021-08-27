@@ -8,7 +8,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "wordpress" do |wordpress|
     wordpress.vm.network "public_network", ip: "10.193.40.98"
     wordpress.vm.provision "shell",
-    inline: "cat /vagrant/configs/id_bionic_ho.pub >> .ssh/authorized_keys"
+    inline: "cat /vagrant/configs/id_bionic_ho.pub >> .ssh/authorized_keys && \
+             apt update -y"
     wordpress.vm.provider "virtualbox" do |vb|
       vb.name = "server_wordpress"
     end
