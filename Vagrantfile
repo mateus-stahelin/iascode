@@ -17,9 +17,9 @@ Vagrant.configure("2") do |config|
   config.vm.define "ansible" do |ansible|
     ansible.vm.network "public_network", ip: "10.193.40.99"
     ansible.vm.provision "shell",
-    inline: "cp /vagrant/id_bionic_ho /home/vagrant && \
-             chmod 600 /home/vagrant/id_bionic_ho && \
-             chown vagrant:vagrant /home/vagrant/id_bionic_ho"
+    inline: "cp /vagrant/id_bionic_ho /home/vagrant/.ssh/ && \
+             chmod 600 /home/vagrant/.ssh/id_bionic_ho && \
+             chown vagrant:vagrant /home/vagrant/.ssh/id_bionic_ho"
     ansible.vm.provider "virtualbox" do |vb|
       vb.name = "server_ansible"
     end
