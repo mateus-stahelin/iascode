@@ -1,4 +1,8 @@
 ---
 - hosts: all
   tasks:
-    - shell: 'echo hello > /vagrant/world.txt'
+    - name: 'Instala o PHP7.2'
+      apt:
+        name: php7.2
+        state: latest
+      become: yes
