@@ -17,4 +17,4 @@
       apt:
         name: libapache2-mod-php7.2
         state: latest
-        become: yes
+      become: yes
