@@ -1,20 +1,15 @@
 ---
 - hosts: all
   tasks:
-    - name: 'Instala o PHP7.2'
+    - name: 'Instala pacotes de dependencia do sistema operaiconal'
       apt:
-        name: php7.2
+        name: "{{ item }}"
         state: latest
       become: yes
-
-    - name: 'Instala o Apache2'
-      apt:
-        name: apache2
-        state: latest
-      become: yes
-
-    - name: 'Instala o modphp'
-      apt:
-        name: libapache2-mod-php7.2
-        state: latest
-      become: yes
+      with_items:
+          - php7.2
+          - apache2
+          - libapache2-mod-php7.2
+          - mysql-server-5.7
+          - python-mysqldb
+          - php7.2-mysql
