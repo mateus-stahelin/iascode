@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
              apt-add-repository --yes --update ppa:ansible/ansible && \
              apt install -y ansible"
     ansible.vm.provision "shell",
-    inline: "ansible-playbook -i /vagrant/Hosts \
+    inline: "ansible-playbook -i /vagrant/hosts \
              /vagrant/provisioning.yml"
     end
 end
