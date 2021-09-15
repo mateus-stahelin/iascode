@@ -20,6 +20,14 @@
       mysql_db:
         name: wordpress_db
         login_user: root
-        login_password: 123456
+        state: present
+      become: yes
+
+    - name: 'Cria o usuário do MySQL'
+      mysql_user:
+        login_user: root
+        name: wordpress_user
+        password: 12345
+        priv: 'wordpress_db.*:ALL'
         state: present
       become: yes
