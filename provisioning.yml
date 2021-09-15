@@ -1,7 +1,7 @@
 ---
 - hosts: all
   tasks:
-    - name: 'Instala pacotes de dependencia do sistema operaiconal'
+    - name: 'Instala pacotes de dependencia do sistema operacional'
       apt:
         name:
           - php7.2
@@ -11,7 +11,15 @@
           - php-ssh2
           - libmcrypt-dev
           - mysql-server-5.7
-          - python-mysqldb
+          - python3-mysqldb
           - php7.2-mysql
         state: latest
+      become: yes
+    
+    - name: 'Cria o banco MySQL'
+      mysql_db:
+        name: wordpress_db
+        login_user: root
+        login_password: 123456
+        state: present
       become: yes
