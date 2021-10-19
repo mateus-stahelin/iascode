@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "wordpress" do |wordpress|
-    wordpress.vm.network "public_network", ip: "10.193.40.98"
+    wordpress.vm.network "public_network", ip: "10.193.40.98", bridge: "TP-Link Wireless Nano USB Adapter"
     wordpress.vm.provision "shell",
     inline: "cat /vagrant/configs/id_bionic_ho.pub >> .ssh/authorized_keys && \
              apt update -y"
@@ -16,9 +16,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "ansible" do |ansible|
-    ansible.vm.network "public_network", ip: "10.193.40.99"
+    ansible.vm.network "public_network", ip: "10.193.40.99", bridge: "TP-Link Wireless Nano USB Adapter"
     ansible.vm.provision "shell",
-    inline: "cp /vagrant/id_bionic_ho /home/vagrant/.ssh/ && \
+    inline: "cp /vagrant/configs/id_bionic_ho /home/vagrant/.ssh/ && \
              chmod 600 /home/vagrant/.ssh/id_bionic_ho && \
              chown vagrant:vagrant /home/vagrant/.ssh/id_bionic_ho"
     ansible.vm.provider "virtualbox" do |vb|
