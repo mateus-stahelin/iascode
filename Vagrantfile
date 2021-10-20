@@ -5,6 +5,16 @@ Vagrant.configure("2") do |config|
     vb.cpus = 1
   end
 
+  config.vm.define "mysql" do |mysql|
+    mysql.vm.network "public_network", ip: "10.193.40.97", bridge: "TP-Link Wireless Nano USB Adapter"
+    mysql.vm.provision "shell",
+    inline: "cat /vagrant/configs/id_bionic_ho.pub >> .ssh/authorized_keys && \
+             sudo apt update -y"
+    mysql.vm.provider "virtualbox" do |vb|
+      vb.name = "server_mysql"
+    end
+  end
+
   config.vm.define "wordpress" do |wordpress|
     wordpress.vm.network "public_network", ip: "10.193.40.98", bridge: "TP-Link Wireless Nano USB Adapter"
     wordpress.vm.provision "shell",
