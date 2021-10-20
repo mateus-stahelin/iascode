@@ -1,5 +1,12 @@
 ---
 - hosts: database
+  handlers:
+    - name: restart mysql
+      service: 
+        name: mysql
+        state: restarted
+      become: yes
+
   tasks:
     - name: 'Instala pacotes de dependencia do sistema operacional'
       apt:
@@ -23,7 +30,20 @@
         password: 12345
         priv: 'wordpress_db.*:ALL'
         state: present
+        host: "{{ item }}"
+      with_items:
+        - 'localhost'
+        - '127.0.0.1'
+        - '10.193.40.98'
       become: yes
+
+    - name: 'Configura MySQL para aceitar conexões remotas'
+      copy:
+        src: 'files/mysqld.cnf'
+        dest: '/etc/mysql/mysql.conf.d/mysqld.cnf'
+      become: yes
+      notify:
+        - restart mysql
 
 - hosts: wordpress
   handlers:
@@ -45,22 +65,6 @@
           - libmcrypt-dev
           - php7.2-mysql
         state: latest
-      become: yes
-    
-    - name: 'Cria o banco MySQL'
-      mysql_db:
-        name: wordpress_db
-        login_user: root
-        state: present
-      become: yes
-
-    - name: 'Cria o usuário do MySQL'
-      mysql_user:
-        login_user: root
-        name: wordpress_user
-        password: 12345
-        priv: 'wordpress_db.*:ALL'
-        state: present
       become: yes
       
     - name: 'Baixa o arquivo de instalacao do Wordpress'
@@ -90,6 +94,7 @@
         - { regex: 'database_name_here', value: 'wordpress_db'}
         - { regex: 'username_here', value: 'wordpress_user'}
         - { regex: 'password_here', value: '12345'}
+        - { regex: 'localhost', value: '10.193.40.97'}
       become: yes
     
     - name: 'Configura Apache para servir o Wordpress'
