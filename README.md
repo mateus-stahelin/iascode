@@ -18,7 +18,7 @@
 
 * Destaco que o servidor Wordpress só será instalado após o servidor web Apache estar online e funcional.
 
-## ☎️ Tecnologias
+## 📱 Tecnologias
 
 - [Ubuntu 18.04 LTS](https://releases.ubuntu.com/18.04/)
 - [Ansible](https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html)
